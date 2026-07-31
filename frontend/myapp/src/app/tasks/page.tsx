@@ -1,16 +1,41 @@
-import Header from "../components/Header";
-import Tasklist from "../components/tasklist";
-export default function tasks()
-{
+import TaskList from "../components/tasklist";
+
+type Task = {
+  id: number;
+  title: string;
+  status: string;
+  priority: string;
+};
+
+
+export default async function TasksPage() {
+
+  const response = await fetch(
+    "http://localhost:3002/tasks",
+    {
+      cache: "no-store"
+    }
+  );
+
+
+  if (!response.ok) {
+
     return (
-        <>
-       <Header/>
-       <h1>task list</h1>
-        <Tasklist t ="this is task 1"/>
-        <Tasklist t ="this is task 2"/>
-        <Tasklist t ="this is task 3"/>
-        <Tasklist t ="this is task 4"/>
-        </>
+      <>
+        <h1>Error</h1>
+        <p>Failed to load tasks</p>
+      </>
     );
+
+  } 
+  else {
+
+    const tasks: Task[] = await response.json();
+
+    return (
+      <TaskList tasks={tasks} />
+    );
+
+  }
+
 }
- 
