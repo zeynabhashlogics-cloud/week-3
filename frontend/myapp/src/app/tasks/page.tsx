@@ -12,9 +12,7 @@ export default async function TasksPage() {
 
   const response = await fetch(
     "http://localhost:3002/tasks",
-    {
-      cache: "no-store"
-    }
+  
   );
 
 
